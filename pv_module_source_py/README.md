@@ -1,6 +1,4 @@
-Just template from previous to update
-
-'# Quality assessement of ground-based irradiance measurement for PV
+# Quality assessement of ground-based irradiance measurement for PV
 Procedures to assess and improve irradiance measurement quality for photovoltaic system are explored in this project.
 The analysis outcome will be used to review and finalise the PhD thesis.
 
@@ -25,24 +23,20 @@ Project architecture is organised in the following folders:
 
 # Who did the project (Who):
 Current contributor : Francesco Mariottini (FM)
-Tom Betts (TB) is expected to provide already some feedback on the preliminary considerations.
-Patrick Isherwood (PI) involvement could be considered at a later stage.
 
 # Development (How)
 
 ## Communication and Management
 FM set up the private repository and taking care of all the development.
-TB and PI are expected to provide useful feedback on the shared content through Github (instruction and links available in docs)
 
 ## Thesis writing
-Most important analysis results will be implemented into the thesis writing.
-Additional literature review will be performed when needed.
+Most important analysis results are implemented into the thesis writing.
 
 # Future improvements 
-Possibility of sharing publicly the code after the thesis could be considered.
+Code is publicly available.
  
 # Data analysis (When)
-- Repository: `ground-based-solar-irradiance`
+- Repository: `ground_based_solar_irradiance`
 - Type of Challenge: `Analysis and visualisation for the PhD thesis`
 - Duration: ``1 person`` plus not quantified supervisors feedback
 - Deadline: `30/08/2021`

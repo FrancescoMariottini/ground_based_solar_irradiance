@@ -37,7 +37,7 @@ Most important analysis results were implemented into the thesis writing.
 
  
 # Data analysis (When)
-- Repository: `ground-based-solar-irradiance`
+- Repository: `ground_based_solar_irradiance`
 - Type of Challenge: `Analysis and visualisation for the PhD thesis`
 - Duration: ``1 person`` plus not quantified supervisors feedback
 - Deadline: `30/08/2021`
