@@ -19,7 +19,7 @@ Project architecture is organised in the following folders:
 1. "irradiance_source_py": contains the main modules used by the files in "irradiance_examples_ipynb", eventually used also by the files in "pv_module_examples_ipynb"
 1. "pv_module_examples_ipynb": Jupyter notebooks for the visualisation of the results.
 1. "pv_module_source_py": contains the main modules used by the files in "pv_module_examples_ipynb". The folder may contain files more updated than the ones in "irradiance_source_py"
-1. Other various "_py" folders: python module not linked to Jupyter notebooks. Descriptions are generally available as README.md
+1. Other various "_py" folders: older python module not linked to Jupyter notebooks. Descriptions are generally available as README.md
 
 
 # Who did the project (Who):

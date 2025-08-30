@@ -86,7 +86,7 @@ SQLA_DTYPES = {"TMSTAMP":sqla.types.TIMESTAMP(timezone=False),
  "pyrheliometer_chp1_02_pt100":sqla.types.FLOAT(2,10)}
 
 
-REMOTE_CONNECTION="postgresql://python_program:P9th0n@crest-vm-ib1/APVDBV3"
+REMOTE_CONNECTION:str
 REMOTE_SCHEMA = "w_meas" #DEV NOTE 5/3/19: no data for pyro_cmp11_w01 in 2015 or 2016
 REMOTE_TABLE = "mms2_met"
 HEADERS_MMS2_MET = [
