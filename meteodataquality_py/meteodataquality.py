@@ -13,24 +13,28 @@ Created on 14/8/17
 more information on the readme file 
 """
 
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
+
+
 """ IMPORTING MAIN MODULES (used in most of the classes)"""
 #importing pandas for dataframe
 import pandas as pd
 #import numpy for the any and all function
 import numpy as np
-import sys
 #import matplotlib for plotting options 
 import matplotlib.pyplot as plt
 #explict poth to python modules
 #DEV NOTE 18/10/18: maybe not necessary
-PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/_IT_R&D/Python_modules/"
 #adding path to the tailored made modules
 sys.path.append(PATH_TO_MODULES)
 #importing "figureshow" for the pie chart (old version)
-import pvdata.dataframeshow.figureshow as fshw  #testing new version chart
-import pvdata.dataframeshow.chart as chrt
+import dataframeshow_py.figureshow as fshw  #testing new version chart
+import dataframeshow_py.chart as chrt
 #importing pvlibint to introduce variables in functions definitions
-import pvdata.solarlibraries.pvlibinterface as pvlibint
+import solarlibraries_py.pvlibinterface as pvlibint
 #importing generation of number from a normal distribution 
 from scipy.stats import norm
 from scipy.optimize import fsolve # for equation solving

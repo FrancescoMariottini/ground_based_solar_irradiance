@@ -9,6 +9,10 @@ more information on the readme file
 #importing pandas for dataframe
 import pandas as pd
 
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
 
 
 #WORKING ON PROGRESS fitting on time 

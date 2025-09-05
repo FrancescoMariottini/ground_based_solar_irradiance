@@ -9,15 +9,18 @@ REF FOLDER: 21120_Calibration of Pyranometers
 
 """
 
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
+
+
 """MODULES"""
 #importing sys to locate modules in different paths
 import sys
 #poth to python modules
-PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/_IT_R&D/Python_modules/"
 #importing os for basic manipulation
 import os
-#adding path to the modules
-sys.path.append(PATH_TO_MODULES)
 #importing pyplot for plotting 
 import matplotlib #for font 1/5/20
 import matplotlib.pyplot as plt
@@ -31,17 +34,17 @@ import datetime as dt
 import pandas as pd
 
 #importing data template for wacom 
-import pvdata.datatemplate.crest_wacom as datacrest
+import datatemplate.crest_wacom as datacrest
 #importing pvlibinterface for interface and solar zenith (not used yet for calibration outdoor)
-import pvdata.solarlibraries.pvlibinterface as pvlibint
+import solarlibraries_py.pvlibinterface as pvlibint
 #importing meteodataquality including calibration functions 
-import pvdata.meteodataquality.meteodataquality as mdq
+import meteodataquality_py.meteodataquality as mdq
 
 #importing module with information on file format
 #importing figureshow for visualisation
-#import pvdata.dataframeshow.figureshow as figshow
+#import dataframeshow_pyfigureshow as figshow
 #importing dataframequality for overview
-#import pvdata.dataframeanalyis.dataframequality as dfq
+#import dataframeanalyis.dataframequality as dfq
 #importing pandas for datetimeindex conversion
 #import pandas as pd
 

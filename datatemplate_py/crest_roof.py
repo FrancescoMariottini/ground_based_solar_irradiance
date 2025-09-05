@@ -7,6 +7,12 @@ DEV NOTE: interesting for automatic import (better check existing?) and prefilte
 DEV NOTE 18/10/18: overlaps with irradinace comparison to be avoided
 """
 
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
+
+
 """ MODULES """
 #importing sys to locate modules in different paths
 import sys
@@ -23,13 +29,13 @@ import pandas as pd
 #import datetime for time detla
 import datetime as dtt
 #importing pvlibinterface for solar zenith
-import pvdata.solarlibraries.pvlibinterface as pvlibint
+import solarlibraries_py.pvlibinterface as pvlibint
 #importing meteodataquality for solar data
 import numpy as np
 #importing matplotlib
 import matplotlib.pyplot as plt
 #importing meteodataquality for testing
-import meteodataquality.meteodataquality as mdq
+import meteodataquality_py.meteodataquality as mdq
 
 
 

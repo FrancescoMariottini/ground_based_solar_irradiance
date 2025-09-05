@@ -6,6 +6,12 @@ objective to make meteonorm datasets easier to be used
 @author: wsfm
 """
 
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
+
+
 #all radiation are short wave unless specified
 #not in the manual if Az is azimuth
 #not in the manual if mi is minute

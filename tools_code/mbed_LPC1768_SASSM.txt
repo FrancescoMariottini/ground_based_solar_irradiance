@@ -1,0 +1,103 @@
+
+# @author: Francesco Mariottini 
+# last updated 31/10/2019
+
+#include "mbed.h"
+#include "math.h"
+//https://os.mbed.com/questions/680/Counting-pulses-on-input/
+
+DigitalOut mosfet(p21);
+DigitalOut led_forward(LED1);
+DigitalOut led_back(LED2);
+AnalogOut  aout(p18);
+Timer timer1;
+
+InterruptIn pulseInterrupt(p5);
+Serial pc(USBTX, USBRX); // tx, rx
+
+//real values
+const int mve_f=15;
+const int stb_s=25; // ISO 9060:2018, 10s plus gradual due to movement
+const int msr_s=45; // 20 seconds equal to 21 measurements 
+const int mve_b=50; // ball already out after less than 5 seconds (15s 10 cm, need half of 5.5 cm)
+const int stb_u=60; 
+const int msr_u=120;
+
+const int end[6] = {mve_f,stb_s,msr_s,mve_b,stb_u,msr_u};
+const int ldfrw[6] =  {1,0,0,0,0,0};
+const int ldbck[6] =  {0,0,0,1,0,0};
+const int msf[6] =  {0,0,0,1,1,};
+const float vlt_p[6] = {0.13f,0.22f,0.30f,0.39f,0.48f,0.56f};
+// based on average v_mbd = 3.3 & vlt_max = 2, (3+n*2)/14 f.
+const int pls_min = 500; //FD60-XX-A8-XXX.XXX-CXX-HSX 5 pulse/mm  about 800 measured
+
+//char valid;
+int timer_s;
+int id=0; //present status
+int pulseCount;
+int pulses_check = 1; //5 pulse/mm
+int pls;
+
+void highPulseDetected()
+    { pulseCount++;};
+
+//mbed time not recorded by datalogger but kept as check
+void SetDateTime
+(int year=1900,int mon=1,int day=1,
+int hour=0,int min=0, int sec=0)
+{
+    struct tm Clock;
+    Clock.tm_year = year - 1900;
+    Clock.tm_mon  = mon;
+    Clock.tm_mday = day;
+    Clock.tm_hour = hour;
+    Clock.tm_min  = min;
+    Clock.tm_sec  = sec;
+    time_t epoch = mktime(&Clock);
+    if (epoch == (time_t) -1) {
+        error("Error in clock setting\n");
+    }
+    set_time(epoch);
+}
+
+void ShowDateTime()
+{
+    char       str[32];
+    time_t     seconds = time(NULL);
+    struct tm *tminfo = localtime(&seconds);
+    strftime(str, 32, "%F,%T", tminfo);
+    printf("%s,", str);
+}
+//https://os.mbed.com/forum/mbed/topic/4655/?page=1#comment-23115
+
+void PhaseStart (int id)
+{
+    //if (id==0){timer1.reset();}
+    if (id==0 or id==3){pulseCount=0;}//pulse reset at start of movement
+    if (id==1 or id==4)
+    {
+        printf("pulses %i \r\n",pls);
+        if (pls>=pls_min){aout=vlt_p[id];}
+        else if (pls<pls_min){aout=0;}
+    }
+    else if (id!=1 and id!=4){aout=vlt_p[id];} 
+    mosfet=msf[id],led_forward=ldfrw[id],led_back=ldbck[id];   
+    ShowDateTime(),printf("Ph %i,",id),printf("mosfet %i,",msf[id]),printf("%f V \r\n",aout.read()*3.3f);
+}
+
+int main()
+{
+    mosfet=msf[id],timer1.start(); //get to the initial shaded position. 
+    pulseInterrupt.rise(&highPulseDetected); // attach the address of highPulseDetected to the Interrupt    
+    while(1) 
+    {                
+        if (pulseCount>pls){pls=pulseCount;}         
+        timer_s = timer1.read();
+        if (timer_s>=end[id])
+        {
+            if (id==5){id=0,timer1.reset();}
+            else if (id!=5){id=id+1;}
+            PhaseStart(id);
+        }  
+    }
+}

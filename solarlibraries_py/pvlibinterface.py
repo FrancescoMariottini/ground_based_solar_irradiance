@@ -20,10 +20,10 @@ more information on the readme file
 """SETTING MODULES FOLDER & IMPORTING MODULES"""
 #importing sys to locate modules in different paths
 import sys
-#poth to python modules
-PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/_IT_R&D/Python_modules/"
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
 #adding path to the tailored made modules
 sys.path.append(PATH_TO_MODULES)
+
 
 
 import numpy as np

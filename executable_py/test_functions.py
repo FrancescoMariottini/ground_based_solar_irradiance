@@ -9,14 +9,20 @@ from scipy.optimize import fsolve # for equation solving
 from scipy import optimize
 import numpy as np
 import math as m #for sin and cos
-import pvdata.solarlibraries.pvlibinterface as pvint
+import solarlibraries_py.pvlibinterface as pvint
 import pandas as pd
 import datetime as dtt
-import pvdata.meteodataquality.meteodataquality as mdq
+import meteodataquality_py.meteodataquality as mdq
 import os
 from pvlib import solarposition as sp
 from pvlib import pvsystem as pvsys
 import pvlib
+
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
+
 
 
 _PATH_TO_OUTPUT = r"C:/Users/wsfm/OneDrive - Loughborough University/Documents/Pyhton_Test/"

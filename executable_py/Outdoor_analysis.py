@@ -11,6 +11,13 @@ Table 1 - Example of check of main information and statistical parameters from a
 
 """
 
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
+
+
+
 """IMPORTING MODULES"""
 #importing sys to locate modules in different paths
 import sys
@@ -21,13 +28,13 @@ sys.path.append(PATH_TO_MODULES)
 #importing pandas for datetimeindex conversion
 import pandas as pd
 #importing dataframequality for overview
-import pvdata.dataframeanalysis.dataframequality as dfq
+import dataframeanalysis.dataframequality as dfq
 #importing pvlibinterface for solar zenith
-import pvdata.solarlibraries.pvlibinterface as pvlibint
+import solarlibraries_py.pvlibinterface as pvlibint
 #importing meteodataquality for solar data
-import pvdata.meteodataquality.meteodataquality as meteoq
+import meteodataquality_py.meteodataquality as meteoq
 #import dataframeshow for time visualisation (TEST)
-import pvdata.dataframeshow.figureshow as fshow
+import dataframeshow_pyfigureshow as fshow
 
 
 #importing datetime to check processing time
@@ -40,7 +47,7 @@ import matplotlib.pyplot as plt
 
 
 
-#import pvdata.solarlibraries.pvlibinterface
+#import solarlibraries_py.pvlibinterface
 
 
 """GLOBAL VARIABLES"""

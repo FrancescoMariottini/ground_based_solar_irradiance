@@ -8,8 +8,14 @@ Overall file creating graphs for PhD02
 @author: wsfm
 """
 
-import pvdata.executable.irradiance_comparison as ir
-import pvdata.executable.calibrations_analysis as cag
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
+
+
+import executable.irradiance_comparison as ir
+import executable.calibrations_analysis as cag
 
 #import matplotlib.pyplot as plt
 

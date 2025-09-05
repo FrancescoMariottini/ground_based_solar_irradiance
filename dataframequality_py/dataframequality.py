@@ -4,6 +4,10 @@
 Created on 14/8/17
 more information on the readme file 
 """
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
 
 
 import numpy as np

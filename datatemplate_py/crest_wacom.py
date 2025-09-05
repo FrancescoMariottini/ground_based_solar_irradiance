@@ -9,6 +9,13 @@ DEV NOTES: should be generalised as extraction tool based on info section and re
 
 """
 
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
+
+
+
 """ IMPORTING MODULES """
 #import pandas for dataframe operations
 import pandas as pd

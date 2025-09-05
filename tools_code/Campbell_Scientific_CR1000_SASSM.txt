@@ -1,0 +1,134 @@
+
+# @author: Francesco Mariottini 
+# last updated 25/01/2020
+
+'CR1000
+'Created by Short Cut (4.0)
+Const Interval = 1 'time interval
+
+'Declare Variables for system
+Public BattV
+Public P_Temp_C
+Units BattV=Volts
+Units P_Temp_C=Deg C
+
+'Declare Variables Units Single Ended (ch 4) 
+Public SEVolt
+Units SEVolt=mV 
+
+'CHP Temperature (see channels later)
+Public CHP_Temp_C
+Units CHP_Temp_C=Deg C
+Public CHP_Irrd
+Units CHP_Irrd= Wm2 'mV
+Const CHP_Sens = 7.99 'KZ
+'dev note 23/8/18: output signal in μV accoding to manual but CR has mV? Sensitivity in μV/W/m2
+
+'CMP21 Temperature (see channels later)
+Public CMP21_Temp_C
+Units CMP21_Temp_C=Deg C
+
+'CMP21 Irradiance (see channels later)
+Public CMP21_Irrd
+Units CMP21_Irrd= Wm2
+'Manufacturer sensitivity (9/12/08)
+'Const CMP21_Sens = 9.47
+'CREST sensitivity (22/8/18)
+'Const CMP11a_Sens = 7.46
+Const CMP21_Sens = 9.468 'Alex 8/11/19
+
+'CMP11 irradiance (see channel later)
+Public CMP11_Irrd
+Units CMP11_Irrd=Wm2
+'Const CMP11_Sens = 8.844 'Alex 8/11/19 
+Const CMP11_Sens = 5.29 'CM10 unknown year
+
+
+'Define Data Tables
+'Average tables SE
+'DataTable(Pulses,True,-1)
+	'DataInterval(0,10,Sec,10)
+	'The following TableFile instruction causes new data to be copied to an optional SC115 Flash
+	'Memory Drive the moment it is plugged into the CS I/O port of the datalogger.
+	'This mode of operation is referred to as Data Collection Mode (see the SC115 manual).
+	'This TableFile instruction has no effect if an SC115 is never plugged into the datalogger.
+	'TableFile("USB:"+Status.SerialNumber+"Values",8,-1,0,0,Hr,0,0)
+	'Average(1,SEVolt,FP2,False)
+'EndTable
+
+'SE table 2 for pulses & system
+DataTable(System,True,-1)
+	DataInterval(0,100,Sec,10)
+	'The following TableFile instruction causes new data to be copied to an optional SC115 Flash
+	'Memory Drive the moment it is plugged into the CS I/O port of the datalogger.
+	'This mode of operation is referred to as Data Collection Mode (see the SC115 manual).
+	'This TableFile instruction has no effect if an SC115 is never plugged into the datalogger.
+	'TableFile("USB:"+Status.SerialNumber+"System",8,-1,0,0,Hr,0,0)
+	Minimum(1,BattV,FP2,False,False)
+	Maximum(1,SEVolt,FP2,False,False)
+	Minimum(1,SEVolt,FP2,False,False)
+EndTable
+
+'Define Data Tables
+  'CHP Temperature 
+DataTable(Radiometers,True,-1)
+  '24/8/18: 5 seconds instead of 1
+	 DataInterval(0,Interval,Sec,10)
+	'dev note 22/8/18: examples of Data Type for Final Storage: 
+	'FP2: CSI two-byte floating point
+	'IEEE4: four-byte floating point (IEEE 754 std). Can also be specified using the keyword FLOAT.
+  TableFile("USB:"+Status.SerialNumber+"Radiometers",8,-1,0,0,Hr,0,0)
+	Average(1,P_Temp_C,IEEE4,False)
+	Average(1,CHP_Temp_C,IEEE4,False)
+	Average(1,CHP_Irrd,IEEE4,False)
+	Average(1,CMP21_Temp_C,IEEE4,False)
+	Average(1,CMP21_Irrd,IEEE4,False)
+	Average(1,CMP11_Irrd,IEEE4,False)
+	Average(1,SEVolt,FP2,False)
+EndTable
+
+
+'Main Program
+BeginProg
+  Scan(1,Sec,1,0)
+    'Default CR1000 Datalogger Battery Voltage measurement 'BattV'
+		Battery(BattV)
+		'Default CR1000 Datalogger Wiring Panel Temperature measurement 'PTemp_C'
+		PanelTemp(P_Temp_C,_60Hz)
+		'Generic Single-Ended Voltage measurements 'SEVolt'
+		'VoltSe(SEVolt,1,mV2500,7,True,0,_60Hz,1,0)
+		VoltSe(SEVolt,1,mV2500,7,True,0,_60Hz,0.001,0)'divider 1000 to have in same graph with sensitivity
+    ' CHP Temperature 
+		'PT100 PRT Temperature Probe (4WPB100) (CSL) measurement 'CHP_Temp_C'
+		'dev note 22/8/18: differential channel "1",  
+		BrHalf4W(CHP_Temp_C,1,mV25,mV25,1,1,1,2035,True,True,0,_50Hz,1,0)
+		PRT(CHP_Temp_C,1,CHP_Temp_C,1,0)
+    'CHP Beam Irradiance
+	  'VoltDiff( Dest, Reps, Range, DiffChan, RevDiff, SettlingTime, Integ, Mult, Offset )
+    'dev note 22/8/18: AutoRange instead of mV25 and 1.0
+    VoltDiff(CHP_Irrd,1,AutoRange,3,True,0,_50Hz,1.0,0)    
+    If CHP_Irrd<0 Then CHP_Irrd=0	
+    If CHP_Irrd>0 Then CHP_Irrd=CHP_Irrd/CHP_Sens*1000
+	
+    'CHP_Irrd=CHP_Irrd/CHP_Sens
+    'CMP3/CMP6/CMP11 Pyranometer measurements 'SlrkJ' and 'CHP_Irrd'
+		'VoltDiff( Dest, Reps, Range, DiffChan, RevDiff, SettlingTime, Integ, Mult, Offset )
+		' CMP21 Temperature 
+		'PT100 PRT Temperature Probe (4WPB100) (CSL) measurement 'CMP21_Temp_C'
+		BrHalf4W(CMP21_Temp_C,1,mV25,mV25,5,2,1,2035,True,True,0,_50Hz,1,0)
+		PRT(CMP21_Temp_C,1,CMP21_Temp_C,1,0)
+    'CMP21 Beam Irradiance
+    'CMP3/CMP6/CMP11 Pyranometer measurements 'SlrkJ' and 'CMP21_Irrd'
+		'VoltDiff( Dest, Reps, Range, DiffChan, RevDiff, SettlingTime, Integ, Mult, Offset )
+    'dev note 22/8/18: AutoRange instead of mV25 and 1.0
+    VoltDiff(CMP21_Irrd,1,AutoRange,7,True,0,_50Hz,1.0,0)    
+    If CMP21_Irrd<0 Then CMP21_Irrd=0
+    If CMP21_Irrd>0 Then CMP21_Irrd=CMP21_Irrd/CMP21_Sens*1000
+		VoltDiff(CMP11_Irrd,1,AutoRange,8,True,0,_50Hz,1.0,0)    
+    If CMP11_Irrd<0 Then CMP11_Irrd=0
+    If CMP11_Irrd>0 Then CMP11_Irrd=CMP11_Irrd/CMP11_Sens*1000
+    CallTable Radiometers
+		'CallTable Pulses 'index back
+	  CallTable System
+		NextScan
+EndProg

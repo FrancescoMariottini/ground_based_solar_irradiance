@@ -6,13 +6,17 @@ Yield analsyis and Montecarlo to be implemented into thesis
 
 @author: wsfm
 """
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
 
 
 import pandas as pd 
 #importing meteodataquality for testing
-import meteodataquality.meteodataquality as mdq
+import meteodataquality_py.meteodataquality as mdq
 #importing pvlibinterface for solar library
-import pvdata.solarlibraries.pvlibinterface as pvlibint
+import solarlibraries_py.pvlibinterface as pvlibint
 #import datetime for extracting month ?
 import datetime as dtt
 

@@ -5,6 +5,12 @@ Created on Wed May 16 13:50:35 2018
 @author: wsfm
 """
 
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
+
+
 #DEV NOTE 25/10/18: sql connection must be closed !! 
 # Last time modified 3/11/2020
 

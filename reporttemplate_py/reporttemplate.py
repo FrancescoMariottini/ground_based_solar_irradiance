@@ -5,6 +5,12 @@ Created on Thu Oct  5 16:10:20 2017
 @author: wsfm
 """
 
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
+
+
 import os
 import matplotlib
 import matplotlib.pyplot as plt 

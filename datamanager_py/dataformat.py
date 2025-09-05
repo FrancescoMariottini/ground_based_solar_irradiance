@@ -4,6 +4,11 @@ Created on Wed May 16 11:49:49 2018
 
 @author: wsfm
 """
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
+
 
 import os
 #import pandas as pd #31/8/20 not used

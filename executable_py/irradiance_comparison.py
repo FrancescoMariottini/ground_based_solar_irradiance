@@ -12,6 +12,10 @@ Used by PhD02
 
 @author: wsfm
 """
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
 
 
 
@@ -23,15 +27,15 @@ PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_B
 #adding path to the tailored made modules
 sys.path.append(PATH_TO_MODULES)
 import sqlalchemy as sqla #import sqla to define variable format 
-import pvdata.datamanager.sql as sql #import sql module
+import datamanager.sql as sql #import sql module
 import pandas as pd #import pandas for dataframe manipulation
 import datetime as dtt #import datetime for time detla
 import numpy as np #importing meteodataquality for solar data
 import matplotlib.pyplot as plt #importing matplotlib
-import pvdata.meteodataquality.meteodataquality as mdq #importing meteodataquality for testing
-import pvdata.solarlibraries.pvlibinterface as pvlibint #importing pvlibinterface for interface and solar zenith
-import pvdata.dataframeshow.figureshow as fs #standard formatting of graphs 
-import pvdata.dataframeshow.chart as chart #DEV NOTE 24/2/19 new version
+import meteodataquality_py.meteodataquality as mdq #importing meteodataquality for testing
+import solarlibraries_py.pvlibinterface as pvlibint #importing pvlibinterface for interface and solar zenith
+import dataframeshow_pyfigureshow as fs #standard formatting of graphs 
+import dataframeshow_pychart as chart #DEV NOTE 24/2/19 new version
 
 
 """ GLOBAL VARIABLES """

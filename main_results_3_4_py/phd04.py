@@ -41,8 +41,13 @@ plt.show()
 
 """
 
+import sys
+PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/ground_based_solar_irradiance/"
+#adding path to the tailored made modules
+sys.path.append(PATH_TO_MODULES)
 
-import pvdata.executable.data_handling as datah
+
+import executable.data_handling as datah
 import datetime as dt
 
 _PATH_TO_OUTPUT = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/_PhD_Thesis/__Outputs/PhD03/"
@@ -164,7 +169,7 @@ if "test solar series" in _PROCESS_NAMES:
     PACKAGE="pvlib"
     import pandas as pd 
     import datetime as dt
-    import pvdata.solarlibraries.pvlibinterface as pvlibint #importing pvlibinterface for solar zenith
+    import solarlibraries_py.pvlibinterface as pvlibint #importing pvlibinterface for solar zenith
     location = pvlibint.SolarLibrary(latitude=LATITUDE,
                                          longitude=LONGITUDE,
                                          altitude=ALTITUDE,
