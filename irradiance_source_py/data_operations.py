@@ -17,7 +17,10 @@ import datetime
 #wraps for specific decorators
 from functools import wraps
 #importing decorators for generic ones
-import decorators
+
+# 20/10/25 quick fix
+# import decorators
+import irradiance_source_py.decorators as decorators
 
 #for showing visualisation when testing
 import matplotlib.pyplot as plt

@@ -9,9 +9,14 @@ from mpl_toolkits.axes_grid1 import host_subplot
 import seaborn as sns
 from textwrap import wrap
 
-import data_operations as dtop
-import clear_sky as csky
-import decorators
+# 20/10/25 quick fix
+# import data_operations as dtop
+# import clear_sky as csky
+# import decorators
+
+import irradiance_source_py.data_operations as dtop
+import irradiance_source_py.clear_sky as csky
+import irradiance_source_py.decorators as decorators
 
 
 describe_with_tukey_fence = decorators.add_tukey_fences(pd.DataFrame.describe)

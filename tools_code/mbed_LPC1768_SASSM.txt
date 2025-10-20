@@ -16,12 +16,23 @@ InterruptIn pulseInterrupt(p5);
 Serial pc(USBTX, USBRX); // tx, rx
 
 //real values
-const int mve_f=15;
-const int stb_s=25; // ISO 9060:2018, 10s plus gradual due to movement
-const int msr_s=45; // 20 seconds equal to 21 measurements 
-const int mve_b=50; // ball already out after less than 5 seconds (15s 10 cm, need half of 5.5 cm)
-const int stb_u=60; 
-const int msr_u=120;
+//const int mve_f=15;
+//const int stb_s=25; // ISO 9060:2018, 10s plus gradual due to movement
+//const int msr_s=45; // 20 seconds equal to 21 measurements 
+//const int mve_b=50; // ball already out after less than 5 seconds (15s 10 cm, need half of 5.5 cm)
+//const int stb_u=60; 
+//const int msr_u=120;
+
+//5/9/25 updated based on last measurement values taken and also description on the thesis
+//5/9/25 also 9846:1993 suggest hypothesis that stabilisation time is the same for shaded and unshaded
+const int mve_f=20;
+const int stb_s=60; // ISO 9060:2018, 40s plus gradual due to movement, safer for class C as well (30s) and also based on author analysis of response.
+//5/9/25 One minute as old 9060:1990 and 9846:1993 if considering movement
+const int msr_s=120; // one minute measurements
+const int mve_b=140; // ball already out after less than 5 seconds (15s 10 cm, need half of 5.5 cm)
+const int stb_u=180; 
+const int msr_u=240;
+
 
 const int end[6] = {mve_f,stb_s,msr_s,mve_b,stb_u,msr_u};
 const int ldfrw[6] =  {1,0,0,0,0,0};
@@ -93,6 +104,7 @@ int main()
     {                
         if (pulseCount>pls){pls=pulseCount;}         
         timer_s = timer1.read();
+        //5/9/25 increas the id everytime it transits into a new phase. if last phase (unshaded measurements mrs_u), it restarts from the first phase.
         if (timer_s>=end[id])
         {
             if (id==5){id=0,timer1.reset();}

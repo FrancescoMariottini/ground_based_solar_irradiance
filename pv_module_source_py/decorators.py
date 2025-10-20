@@ -24,7 +24,9 @@ import numpy as np
 
 #issue solved by reinstall it
 
+#20/10/25 quick fix
 mpl.style.use(['thesis'])
+# at C:\Users\wsfm\OneDrive - Loughborough University\_Personal_Backup\python_repositories\venv\Lib\site-packages\matplotlib\mpl-data\stylelib
 
 #loc giving freedom since change depending how many graphs
 # Loc can also be a 2-tuple giving the coordinates of the lower-left corner of the legend in axes coordinates

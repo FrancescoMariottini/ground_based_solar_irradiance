@@ -39,7 +39,11 @@ import itertools as ittl
 
 #20/5/21 import date_operation to avoid replicating functions 
 #20/5/21function from nb should be transfered
-import data_operations as dtop
+#20/10/25 quick fix
+# import data_operations as dtop
+# import decorators
+import irradiance_source_py.data_operations as dtop
+import irradiance_source_py.decorators as decorators
 
 # commented not used
 # from pandas import concat
@@ -65,7 +69,7 @@ from datetime import datetime, timedelta, timezone
 
 from typing import List, Dict
 
-import decorators
+
 
 
 
@@ -801,7 +805,7 @@ END PREVIOUS STABILITY REQUIREMENTS IN UNCERTAINTY.PY (FORMER CALIBRATION ANALYS
 def stabilityflagging(ms_utc: pd.DataFrame, sl: SolarLibrary, steps: List[str], periods: List[str], counts: List[int],
         g_mins:List[int]=[None], aoi_maxs:List[int]=[None], pearson_mins:List[float]=[None], g_uncs:List[int]=[None],
         kcs_cv_maxs:List[int]=[None], kcs_uncs:List[int]=[None], pwr_cv_maxs:List[int]=[None],
-        cs_columns:List[str]=[None]) -> (pd.DataFrame, Dict[str, pd.DataFrame]):
+        cs_columns:List[str]=[None]): # -> (pd.DataFrame, Dict[str, pd.DataFrame]):
     """
     :param ms_utc:
     :param sl:

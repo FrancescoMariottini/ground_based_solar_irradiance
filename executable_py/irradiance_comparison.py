@@ -26,16 +26,17 @@ import sys
 PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_Backup/_IT_R&D/Python_modules/"
 #adding path to the tailored made modules
 sys.path.append(PATH_TO_MODULES)
-import sqlalchemy as sqla #import sqla to define variable format 
-import datamanager.sql as sql #import sql module
+# 8/10/25 tmp removing SQL alchemy due to university admin issues
+# import sqlalchemy as sqla #import sqla to define variable format 
+# import datamanager_py.sql as sql #import sql module
 import pandas as pd #import pandas for dataframe manipulation
 import datetime as dtt #import datetime for time detla
 import numpy as np #importing meteodataquality for solar data
 import matplotlib.pyplot as plt #importing matplotlib
 import meteodataquality_py.meteodataquality as mdq #importing meteodataquality for testing
 import solarlibraries_py.pvlibinterface as pvlibint #importing pvlibinterface for interface and solar zenith
-import dataframeshow_pyfigureshow as fs #standard formatting of graphs 
-import dataframeshow_pychart as chart #DEV NOTE 24/2/19 new version
+import dataframeshow_py.figureshow as fs #standard formatting of graphs 
+import dataframeshow_py.chart as chart #DEV NOTE 24/2/19 new version
 
 
 """ GLOBAL VARIABLES """
@@ -79,7 +80,8 @@ LOCAL_TABLE_EURAC_METEOSTATION="meteostation"
 
 
 #for importing from csv to local database
-SQLA_DTYPES = {"TMSTAMP":sqla.types.TIMESTAMP(timezone=False),
+# 8/10/25 tmp removing SQL alchemy due to university admin issues
+"""SQLA_DTYPES = {"TMSTAMP":sqla.types.TIMESTAMP(timezone=False),
  "RECNBR":sqla.types.INTEGER,
  "pyrheliometer_chp1_01_mms2":sqla.types.FLOAT(2,10),
  "pyrheliometer_chp1_02_mms2":sqla.types.FLOAT(2,10),	
@@ -87,10 +89,10 @@ SQLA_DTYPES = {"TMSTAMP":sqla.types.TIMESTAMP(timezone=False),
  "pyro_cmp11_w08":sqla.types.FLOAT(2,10),	
  "pyro_cmp11_w01":sqla.types.FLOAT(2,10),	
  "pyrheliometer_chp1_01_pt100":sqla.types.FLOAT(2,10),	
- "pyrheliometer_chp1_02_pt100":sqla.types.FLOAT(2,10)}
+ "pyrheliometer_chp1_02_pt100":sqla.types.FLOAT(2,10)}"""
 
-
-REMOTE_CONNECTION:str
+# 8/10/2025
+REMOTE_CONNECTION ="postgresql://USERNAME:PASSWORD@SERVER/DATABASE"
 REMOTE_SCHEMA = "w_meas" #DEV NOTE 5/3/19: no data for pyro_cmp11_w01 in 2015 or 2016
 REMOTE_TABLE = "mms2_met"
 HEADERS_MMS2_MET = [
@@ -254,6 +256,7 @@ class Setup:
         #TEST = True limit processing time by: reducing input (100 rows max)
         self.test = test
         #define no names for key dataframe columns to be defined later when loading the dataframe
+        # 6/9/25 SASSM
         if source=="ground 2019":
             self.diffuse_column="diffuse"
             self.tilted_column="CMP21_Irrd_Avg"
@@ -317,6 +320,7 @@ class Setup:
                 self.dfsout[index]=df_srs #good for iterations
 
 
+        # 6/9/25 first experimental ground measurements
         if source == "crest ground 180824_29":
             self.diffuse_column = "CMP11a_Irrd_Avg"
             self.global_column = "CMP21_Irrd_Avg"
@@ -573,13 +577,16 @@ def run(process,test=True,path_to_output=PATH_TO_OUTPUT,markersize=None,
         counts=21
         irr_min=100 #100 for calibration in cloudy conditions 9847
         aoi_max=95 #characterisation (not used anyway)
+        # 5/9/25 to be verified but it should be equivalent to kcs_uncs in other files
         kcs_range= [0.7,1.3] #a bit cloudy increasing  
         # 0.2: uncertainty 95% of HOURLY values for moderate quality (class C) radiometers [WMO 2017) @fm: enough due to additional filter and uncertainty of cs modelling
         # 0.3 added for 04/12/19 
         kcs_cv_max= 0.04 #increased from 0.02 of calibration since it may include 60 values
         pwr_cv_max=kcs_cv_max
         pearson_min= 0.8    
-        deviation_max= 0.02
+        # 5/9/25 updated from 0.02 to 0.01 according to the standard ISO 9846:1993.
+        # 5/9/25 it is used to establish the validation of the series.
+        deviation_max= 0.01
         
         
                

@@ -39,7 +39,12 @@ import itertools as ittl
 
 #20/5/21 import date_operation to avoid replicating functions 
 #20/5/21function from nb should be transfered
-import data_operations as dtop
+
+#20/10/25 quick fix
+# import data_operations as dtop
+# import decorators
+import pv_module_source_py.data_operations as dtop
+import pv_module_source_py.decorators as decorators
 
 # commented not used
 # from pandas import concat
@@ -65,7 +70,7 @@ from datetime import datetime, timedelta, timezone
 
 from typing import List, Dict
 
-import decorators
+
 
 
 

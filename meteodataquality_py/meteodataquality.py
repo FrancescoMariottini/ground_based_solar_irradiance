@@ -11,6 +11,8 @@ more information in the readme file
 @author: Francesco Mariottini 
 Created on 14/8/17
 more information on the readme file 
+9/9/25 some functions could be older version than the ones in other files
+9/9/25 example: irradianceflagging vs datesflagging in executable.calibrations_analysis
 """
 
 import sys
@@ -719,7 +721,7 @@ class SolarData: #DEV NOTE 5/12/19: class probably not needed, shold be Solar Li
                 #valid Boolean, f_j_tmp scalar, 
         
         
-        
+        # 7/9/25 function to obtain calibration factor. Better to convert to obtain the responsitivity instead.
         def get_factor_df(self,
                        reference_series:pd.Series, 
                        field_series:pd.Series,
@@ -1810,6 +1812,7 @@ class SolarData: #DEV NOTE 5/12/19: class probably not needed, shold be Solar Li
         
         #stability flagging should be performed at resolution level and only for measurements of phases 
         
+        # 6/9/25 stability at 
         df,dfsout=SolarData.stabilityflagging(SolarLibrary=location,
                           datetimeindex_utc=datetimeindex_utc, #timezone:str,
                           irradiance_values=beam_values,                      
@@ -1849,6 +1852,7 @@ class SolarData: #DEV NOTE 5/12/19: class probably not needed, shold be Solar Li
                 sqn=sqn_ends.iloc[i,sqn_ends.columns.get_loc("sequence")]
                 return sqn
             df_srs.loc[:,"sequence"]=df_srs.loc[:,"datetime"].transform(sequence_id)
+            # 6/9/25 defining diffuse dataframe including only shaded series
             df_dff=df_srs.loc[(df_srs.loc[:,"phase"]==2),:]
             #DUMMY TEST CODE
             #df_dff.loc[:,"hemispherical"]=np.random.randint(low=20, high=200, size=len(df_dff)) #test dummy
@@ -1868,7 +1872,7 @@ class SolarData: #DEV NOTE 5/12/19: class probably not needed, shold be Solar Li
             #12/1/20 improvements: filtering without removing 
             #dt_dff = agg_dff.loc[(agg_dff.loc[:,"hemispherical_var"]<deviation_max)&(agg_dff.loc[:,"hemispherical_var"]>-deviation_max)&(agg_dff.loc[:,"count"]>=count_characterisation),"datetime"] #condition on shading                  
             dt_dff = agg_dff.loc[:,"datetime"] #condition on shading                  
-                        
+            # 6/9/25 defining hemispherical dataframe including only unshaded series            
             df_hms=df_srs.loc[(df_srs.loc[:,"phase"]==5),:]  
             #DUMMY TEST CODE
             #df_hms.loc[:,"hemispherical"]=np.random.randint(low=100, high=500, size=len(df_hms)) #test dummy
@@ -1909,6 +1913,7 @@ class SolarData: #DEV NOTE 5/12/19: class probably not needed, shold be Solar Li
                 df_hms_vld=df_hms.loc[(df_hms.loc[:,"sequence"].isin(agg_hms_vld.index)),:]#screening out valid of not valid series
                 df_hms_vld.loc[:,"diffuse"]=df_hms_vld.apply(lambda x:agg_hms_vld.loc[x.loc["sequence"],"diffuse"],axis=1) #9/1/2020 provided as check
                 df_hms_vld.loc[:,"aoi_tilt"]=df_hms_vld.loc[:,"zenith"]-tilt
+                # 6/9/25 calculation of the measured beam, the theoretical one is from the pyrheliometer
                 df_hms_vld.loc[:,"hemispherical_beam"]=df_hms_vld.apply(lambda x:
                 (x["hemispherical"]-x["diffuse"])/np.cos(np.deg2rad(x["aoi_tilt"])),axis=1) #aoi is for horizontal initially 
                 calibration = SolarData.Calibration(location=location, method="9847 1a",calibration_factor=1)#initialise characterisation (as calibration with reference factor 1)    
@@ -1965,6 +1970,11 @@ class SolarData: #DEV NOTE 5/12/19: class probably not needed, shold be Solar Li
                         results_j.loc[i,"cosine error"]=1-f_j
                         results_j.loc[i,"abs_err"]=(1-f_j)*beam
                         results_j.loc[i,"cos_err_std"]=f_j_std
+                        # 7/9/25 updated formulas. Better to redefine fir sensitivity instead of calibration factor ?
+                        results_j.loc[i,"cosine error"]=1/f_j -1
+                        # 7/9/25 this is actually deviation, not absolute error, but ket 
+                        results_j.loc[i,"abs_err"]=(1/f_j -1)*beam
+                        results_j.loc[i,"cos_err_std"]=f_j_std                        
                         results_j.loc[i,"len_j"]=len_j
                         
                             

@@ -34,7 +34,7 @@ import datetime as dt
 import pandas as pd
 
 #importing data template for wacom 
-import datatemplate.crest_wacom as datacrest
+import datatemplate_py.crest_wacom as datacrest
 #importing pvlibinterface for interface and solar zenith (not used yet for calibration outdoor)
 import solarlibraries_py.pvlibinterface as pvlibint
 #importing meteodataquality including calibration functions 
@@ -1356,7 +1356,9 @@ def run(process,test=True,path_to_output=PATH_TO_OUTPUT,markersize=None):
             #iteration for single measurements
             
             #for i in range(5): #30/04/20 considering only first series of measurements
-            if df_results.empty== True:  
+            if df_results.empty== True:
+                 # 8/10/25 only the first measurement series and its stabilization is considered -> i = 0
+                 # 8/10/25 previously different measuremente series were analysed but the result were similar  
                  i=0
                 
                  #acquisition of parameters for reference pyranometer
@@ -1514,6 +1516,8 @@ def run(process,test=True,path_to_output=PATH_TO_OUTPUT,markersize=None):
         
                 
                 #to simplify imposing 0 for the starting series measurement 
+                # 8/10/25 STABILISATION TIME previously used to have multiple series in the same graph
+                # 8/10/25 however confusing and not necessary since similar results across the series anyway
                 df_sam_meas_tmp.loc[:,"seconds"] = df_sam_meas_tmp.loc[:,"seconds"].apply(lambda x: x-start+STABILISATION_TIME*i)
                 #set up of sam voltage as y variable
                 df_sam_meas_tmp = df_sam_meas_tmp.assign(sam_voltage= lambda x: x.value - sam_dark_av)
@@ -1557,6 +1561,7 @@ def run(process,test=True,path_to_output=PATH_TO_OUTPUT,markersize=None):
                     #to simplify imposing 0 for the starting series measurement 
                     df_sam_settle_tmp.loc[:,"seconds"] = df_sam_settle_tmp.loc[:,"seconds"].apply(lambda x: x-start+STABILISATION_TIME*i)
                     #set up of sam voltage as y variable
+                    # 9/10/25 difference between stabilisation light values and average of dark measurements
                     df_sam_settle_tmp = df_sam_settle_tmp.assign(sam_voltage= lambda x: x.value - sam_dark_av)
                     
                     #DEV NOTE: check relevance of calculated statistical parameters 
@@ -1602,6 +1607,8 @@ def run(process,test=True,path_to_output=PATH_TO_OUTPUT,markersize=None):
                 # DEV NOTES: subplot not necessary ? 
                 
                 #calculate percentage variation of light - dark measurements
+            # 8/10/25 calculate ratio between stabilisation delta voltage unshaded- average shaded divided by average voltage measurement series
+            # 8/10/25 although final responsitivity and other values normally extracted, not needed
             df_plot_settle.loc[:,df_plot_settle_columns[1]] = df_plot_settle.loc[:,df_plot_settle_columns[1]].apply(lambda x: x/np.average(df_plot_meas.loc[:,df_plot_settle_columns[1]])*100)       
             # plot graph p,
             tresponse_df=df_plot_settle.iloc[(df_plot_settle['value']-95).abs().argsort()[:1]]#120620 approximate time response

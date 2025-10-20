@@ -1,6 +1,7 @@
 
 # @author: Francesco Mariottini 
 # last updated 25/01/2020
+# 5/9/25 generic program including options for different types of measurement campaigns. See the different definitions of Data Tables
 
 'CR1000
 'Created by Short Cut (4.0)

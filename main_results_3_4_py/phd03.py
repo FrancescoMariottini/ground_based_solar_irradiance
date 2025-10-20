@@ -14,8 +14,8 @@ PATH_TO_MODULES = r"C:/Users/wsfm/OneDrive - Loughborough University/_Personal_B
 sys.path.append(PATH_TO_MODULES)
 
 
-import executable.irradiance_comparison as ir
-import executable.calibrations_analysis as cag
+import executable_py.irradiance_comparison as ir
+import executable_py.calibrations_analysis as cag
 
 #import matplotlib.pyplot as plt
 
@@ -98,6 +98,8 @@ _CALIBRATION_PROCESSES=["calibration outdoor eurac excel series finding CH4 date
 
 _IRRADIANCE_PROCESSES=[]
 
+_CALIBRATION_PROCESSES=["crest indoor time response"]
+
 for value in list(_IRRADIANCE_PROCESSES):
     print(value)
     df_results = ir.run(process=value,test=_TEST,path_to_output=_PATH_TO_OUTPUT) 
@@ -106,7 +108,7 @@ for value in list(_CALIBRATION_PROCESSES):
     print(value)
     df_results = cag.run(process=value,test=_TEST,path_to_output=_PATH_TO_OUTPUT) 
        
-    
+print("END")
 
 """
 for value in list(_PROCESS_NAMES):
