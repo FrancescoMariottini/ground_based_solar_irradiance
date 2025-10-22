@@ -122,7 +122,9 @@ class SolarLibrary:
         if any(i in outputs for i in dayofyear):
             df["dayofyear"] = datetimeindex_utc.dayofyear
         if any(i in outputs for i in extraradiation):
-            df["extraradiation"] = irr.extraradiation(df["dayofyear"])
+            # 21/10/25 replaced with recenvt version
+            # df["extraradiation"] = irr.extraradiation(df["dayofyear"])
+            df["extraradiation"] = irr.get_extra_radiation(df["dayofyear"])
         if any(i in outputs for i in linke_turbidity):
             if linketurbidity == None: df["linketurbidity"] = csky.lookup_linke_turbidity(datetimeindex_utc,self.latitude,self.longitude)
         if any(i in outputs for i in spa_python):
@@ -134,11 +136,12 @@ class SolarLibrary:
             if any(i in outputs for i in apparent_zenith):
                 df["apparentzenith"] = spa["apparent_zenith"] #df["apparentzenith"] changed on 19/11/19
             if any(i in outputs for i in zenith):
-                df["zenith"] = spa["zenith"]                
+                df["zenith"] = spa["zenith"]     
+                # 21/10/25 replaced with recenvt version         
                 if any(i in outputs for i in airmassrelative):
-                    df["airmassrelative"] = atm.relativeairmass(df["zenith"],model=APPARENT_ZENITH_MODEL)
+                    df["airmassrelative"] = atm.get_relative_airmass(df["zenith"],model=APPARENT_ZENITH_MODEL)
                     if any(i in outputs for i in airmassabsolute):
-                        df["airmassabsolute"] = atm.absoluteairmass(df["airmassrelative"],self.pressure)
+                        df["airmassabsolute"] = atm.get_absolute_airmass(df["airmassrelative"],self.pressure)
             if any(i in outputs for i in azimuth):
                 df["azimuth"] = spa["azimuth"]
             if any(i in outputs for i in aoi):
@@ -155,10 +158,13 @@ class SolarLibrary:
                 #check if air mass absolute or relative 
                 #print("Poa model: "+str(self.poa_model)) #test line
                 #if self.poa_model=="perez": print("Perez diffuse model: "+str(self.diffuse_model)) #test line
-                total_irrad = irr.total_irrad(surface_tilt=self.surface_zenith,
+                total_irrad = irr.get_total_irradiance(surface_tilt=self.surface_zenith,
                                               surface_azimuth=self.surface_azimuth,
-                                              apparent_zenith=df["apparentzenith"],
-                                              azimuth=df["azimuth"],
+                                              # 21/10/25 replaced with recenvt version  
+                                              # apparent_zenith=df["apparentzenith"],
+                                              # azimuth=df["azimuth"],
+                                              solar_zenith=df["apparentzenith"],
+                                              solar_azimuth=df["azimuth"],
                                               dni=df["dni"],
                                               ghi=df["ghi"],
                                               dhi=df["dhi"],

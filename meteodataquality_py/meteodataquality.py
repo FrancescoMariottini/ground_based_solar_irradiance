@@ -1129,8 +1129,12 @@ class SolarData: #DEV NOTE 5/12/19: class probably not needed, shold be Solar Li
         if len(df_vld)!=0:  
             timerstart = dt.datetime.now() 
             parameters = list(["clearskypoa","aoi"]) #define requested parameters
-            datetimeindex_utc_vld = pd.DatetimeIndex(df_vld.loc[:,"datetime"].values,ambiguous='NaT')            
+            datetimeindex_utc_vld = pd.DatetimeIndex(df_vld.loc[:,"datetime"].values,ambiguous='NaT')   
+            
+                     
             df_par =  SolarLibrary.getsolarseries(datetimeindex_utc_vld,parameters) #modelling parameter
+
+
             df_vld  = pd.DataFrame({   
             'datetime': df_vld.loc[:,"datetime"].values,
             'date':  df_vld.loc[:,"date"].values,
