@@ -20,7 +20,7 @@ Project architecture is organised in the following folders:
 1. "pv_module_examples_ipynb": Jupyter notebooks for the visualisation of the results.
 1. "pv_module_source_py": contains the main modules used by the files in "pv_module_examples_ipynb". The folder may contain files more updated than the ones in "irradiance_source_py"
 1. "tools_code". Not python code developed for related tools. E.g. code for the linear actuator and datalogger used for the Solys Alternating Sun-and-Shade Method (SASSM)
-1. "v_results" folders: quick & dirty code (supported by copilot) for the last graphical adjustements
+1. "v_results" folders: quick code supported by copilot for the last graphical adjustements
 1. Other various "_py" folders: older python module not linked to Jupyter notebooks. Descriptions are generally available as README.md
 
 
@@ -41,8 +41,6 @@ Most important analysis results were implemented into the thesis writing.
 # Data analysis (When)
 - Repository: `ground_based_solar_irradiance`
 - Type of Challenge: `Analysis and visualisation for the PhD thesis`
-- Duration: ``1 person`` plus not quantified supervisors feedback
-- Deadline: `30/08/2021`
 
 
 
